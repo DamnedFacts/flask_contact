@@ -1,0 +1,63 @@
+form {
+	margin: 0;
+	padding: 0;
+}
+
+dl.forms {
+	float: left;
+	width: 100%;
+}
+
+dl.forms dt {
+	margin: 0;
+	padding: 10px 0 5px 0;
+	clear: left;
+	float: left;
+	width: 95px;
+}
+
+dl.forms label { 
+	font-weight: bold;
+}
+
+dl.forms dd {
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+
+dl.forms dd.help {
+	clear: left;
+	padding-top: 2px;
+	font-size: 90%;
+	color: #999;
+}
+
+dl.forms input { width: 250px; }
+
+dl.forms textarea { width: 450px; }
+
+dl.forms dd.radio input { width: auto; }
+
+dl.forms textarea { height: 150px; }
+
+.required {
+	color: #FF0000;
+	font-weight: bold;
+} 
+
+.antispam1 {
+	font-weight: normal;
+	opacity: 0;
+	z-index: -1;
+	position: absolute;
+}
+
+.antispam2 {
+	opacity: 1;
+	z-index: 3;
+	position: absolute;
+	width:  500px;
+	height:  25px;
+	top: 0px;
+	left: 0px;
+}
