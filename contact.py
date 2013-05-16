@@ -6,15 +6,15 @@ import smtplib
 from email.MIMEText import MIMEText
 
 # Local Project
-import validation 
+import validation
 
 contact_page = Blueprint('contact_page', __name__, template_folder="templates",
                          static_folder='static')
 
 MAIL_HOST="localhost"
 MAIL_PORT=25
-MAIL_RECIPIENT="info@saintnicholas.cc"
-MAIL_SUBJECT_PREPEND="[Saint Nicholas Contact Form] "
+MAIL_RECIPIENT="info@myhost.com"
+MAIL_SUBJECT_PREPEND="[Flask Contact Form] "
 
 class ContactForm(Form):
     name = TextField("Name: ")
@@ -66,7 +66,7 @@ def contact():
         # Use variable_encode to get form entries to a normal dict.
         dataDict = variable_encode(request.form)
         responseHeaders = request.headers
-       
+
         # We use this checkbox state as an inverse state of spam
         # If this is checked, we assume a bot ignored the markup and 
         # clicked it.

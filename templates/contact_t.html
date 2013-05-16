@@ -1,40 +1,26 @@
-{% macro render_field(field, labelclass='') %}
-{% if labelclass %}
-<dt> {{ field.label }}<span class={{ labelclass }}>*</span>
-{% else %}
-<dt> {{ field.label }}
-{% endif %}
-
-<dd>{{ field(**kwargs)|safe }}
-{% if field.errors %}
-<ul class=errors>
-    {% for error in field.errors %}
-    <li>{{ error }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-</dd>
-{% endmacro %}
-
 {% extends "base_t.html" %}
 
 {% block header %}
 <link type='text/css' rel="stylesheet" href="{{ url_for('contact_page.static', filename='css/contact_t.css') }}"}
 {% endblock%}
 
+{% block container %}
+{# Call container template super #}
+{{ super() }}
+{% endblock container %}
+
 {% block content %}
-<div id="page_wrapper">
+<div class="twelve columns offset-by-three content">
+    {# Call content template super #}
+    {{ super() }}
+
     <div id="sub_page_intro">
         <div class="copy">
             {% if info %}
             {{info|safe}}
             {% else %}
-            <h1 class="intro">Contact Us</h1>
-            <p>To send us a comment or to inquire about our community or beliefs, please contact us theough the options below. You may also use it to request mass cards for Divine Liturgy intentions.</p>
-            <p><strong>Father Christopher Manuele</strong>: (585) 426-4218</p>
-            <p><strong>Father Deacon Edmond J. Elhilow, Jr.</strong>: (585) 467-5475</p>
-            <p><strong>Father Deacon Elias Y. Sarkis</strong>: (585) 748-9646</p>
-            <p><strong>Church Address [<a href="http://maps.google.com/maps?q=1492+spencerport+road+Gates,+New+York+14606-3520">Google Map</a>]:&nbsp;</strong><br />1492 Spencerport Rd&nbsp;<br />Rochester, NY 14606-3520</p>
+            <h2 class="intro">Contact Us</h2>
+            <p>This form will allow you to contact us by e-mail.</p>
             {% endif %}
         </div>
     </div>
@@ -53,8 +39,8 @@
                 {% endautoescape %}
             </dl>
             <button type="submit" id="submit"> Submit </button> 
-            <p class="form-meta" style="text-align: center;">I understand that without a valid E-mail address I cannot be contacted.</p>                               
-        </form> 
+            <p class="form-meta" style="text-align: center;">I understand that without a valid E-mail address or phone number I cannot be contacted.</p>
+        </form>
     </div>
 </div>
 {% endblock content %}
