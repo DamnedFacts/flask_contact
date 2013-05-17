@@ -101,14 +101,19 @@ def send_email(dataDict, responseHeaders):
 Flask route for producing the contact form view.
 """
 @contact_page.route('/', methods=['GET', 'POST'])
-def contact():
+@contact_page.route('/<recipient>', methods=['GET', 'POST'])
+def contact(recipient=None):
     info = None
     saved_recipient_field = ContactForm.recipient
-    recip_id = request.args.get('recipient')
+    recip_id = recipient or request.args.get('recipient')
+
     if recip_id in MAIL_RECIPIENT:
-        recip_name = MAIL_RECIPIENT[request.args.get('recipient')][0]
+        recip_name = MAIL_RECIPIENT[recip_id][0]
         ContactForm.recipient = TextField("Send To: ", default=recip_name,
                                           id=recip_id)
+    else:
+        recip_id = None
+
     form = ContactForm(request.form)
     ContactForm.recipient = saved_recipient_field
 
@@ -154,7 +159,6 @@ def contact():
         # If the response was thanks, clear the form.
         if response == 'thanks' :
             form = ContactForm()
-
     return render_template("contact_t.html", form=form, info=info,
-                           one_recipient=(recip_id in MAIL_RECIPIENT),
+                           selected_recipient=recip_id,
                            page_title="Contact Us")

@@ -78,10 +78,10 @@
         </div>
     </div>
     <div class="contact_form">
-        <form action="{{url_for(".contact")}}" id="mail" method="post" autocomplete="off"> 
+        <form action="{{url_for(".contact", recipient=selected_recipient)}}" id="mail" method="post" autocomplete="off"> 
             <dl class=forms>
                 {% autoescape false %}
-                {% if one_recipient %}
+                {% if selected_recipient is not none %}
                     {{ render_field(form.recipient, labelclass="required", readonly=true) }}
                 {% else %}
                     {{ render_field(form.recipient, labelclass="required") }}
