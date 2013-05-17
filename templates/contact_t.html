@@ -1,18 +1,71 @@
 {% extends "base_t.html" %}
 
+{% macro render_field(field, labelclass='') %}
+{% if labelclass %}
+<dt> {{ field.label }}
+<script>
+    $('label[for="{{ field.id }}"]').append("<span class={{ labelclass }}>*</span>");
+</script>
+{% else %}
+<dt> {{ field.label }}
+{% endif %}
+
+<dd>{{ field(**kwargs)|safe }}
+{% if field.errors %}
+<ul class=errors>
+    {% for error in field.errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</dd>
+{% endmacro %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+{% macro render_msg() %}
+    {% if info %}
+    <p class=info><strong>Info:</strong> {{ info }}
+    {% endif %}
+
+    {% if success %}
+    <p class=success><strong>Success:</strong> {{ success }}
+    {% endif %}
+
+    {% if warning %}
+    <p class=warning><strong>Warning:</strong> {{ warning }}
+    {% endif %}
+
+    {% if error %}
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+
+    {% if validation %}
+    <p class=validation><strong>Validation:</strong> {{ validation }}
+    {% endif %}
+{% endmacro %}
+
 {% block header %}
 <link type='text/css' rel="stylesheet" href="{{ url_for('contact_page.static', filename='css/contact_t.css') }}"}
 {% endblock%}
 
 {% block container %}
 {# Call container template super #}
-{{ super() }}
+{# {{ super() }} #}
 {% endblock container %}
 
 {% block content %}
 <div class="twelve columns offset-by-three content">
     {# Call content template super #}
-    {{ super() }}
+    {# {{ super() }} #}
 
     <div id="sub_page_intro">
         <div class="copy">
@@ -28,6 +81,11 @@
         <form action="{{url_for(".contact")}}" id="mail" method="post" autocomplete="off"> 
             <dl class=forms>
                 {% autoescape false %}
+                {% if one_recipient %}
+                    {{ render_field(form.recipient, labelclass="required", readonly=true) }}
+                {% else %}
+                    {{ render_field(form.recipient, labelclass="required") }}
+                {% endif %}
                 {{ render_field(form.name, labelclass="required") }}
                 {{ render_field(form.email, labelclass="required") }}
                 {{ render_field(form.phone) }}
