@@ -39,7 +39,11 @@ from email.MIMEText import MIMEText
 import validation
 
 # import our configuration preferences for the contact form.
-from config import *
+try:
+    from config import *
+except ImportError:
+    print "Warning: using sample config module (config_sample)!"
+    from config_sample import *
 
 contact_page = Blueprint('contact_page', __name__, template_folder="templates",
                          static_folder='static')
