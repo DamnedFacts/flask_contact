@@ -44,6 +44,7 @@ try:
 except ImportError:
     print "Warning: using sample config module (config_sample)!"
     from config_sample import *
+    testing = True
 
 contact_page = Blueprint('contact_page', __name__, template_folder="templates",
                          static_folder='static')
@@ -164,5 +165,5 @@ def contact(recipient=None):
         if response == 'thanks' :
             form = ContactForm()
     return render_template("contact_t.html", form=form, info=info,
-                           selected_recipient=recip_id,
+                           selected_recipient=recip_id,testing=testing,
                            page_title="Contact Us")
