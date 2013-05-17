@@ -41,6 +41,7 @@ import validation
 # import our configuration preferences for the contact form.
 try:
     from config import *
+    testing = False
 except ImportError:
     print "Warning: using sample config module (config_sample)!"
     from config_sample import *
