@@ -1,4 +1,4 @@
-{% extends "base_t.html" %}
+{% if not testing %}{% extends "base_t.html" %}{% endif %}
 
 {% macro render_field(field, labelclass='') %}
 {% if labelclass %}
