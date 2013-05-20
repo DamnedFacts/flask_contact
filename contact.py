@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # Contact page
 from flask import (Blueprint, render_template, request)
-from wtforms import Form, TextField, TextAreaField, BooleanField, SelectField
+from wtforms import Form, TextField, TextAreaField, BooleanField, SelectField, HiddenField
 from formencode.variabledecode import variable_encode
 import smtplib
 from email.MIMEText import MIMEText
@@ -71,7 +71,8 @@ class ContactForm(Form):
 Sends mail upon posting the form.
 """
 def send_email(dataDict, responseHeaders):
-    recipient = "{0} <{1}>".format(MAIL_RECIPIENT[dataDict["recipient"]][0], MAIL_RECIPIENT[dataDict["recipient"]][1])
+    recipient = dataDict["recipient"]
+    recipient = "{0} <{1}>".format(MAIL_RECIPIENT[recipient][0], MAIL_RECIPIENT[recipient][1])
 
     # Append dataDict key/value pairs.
     bodyStr = ""
@@ -110,18 +111,22 @@ Flask route for producing the contact form view.
 @contact_page.route('/<recipient>', methods=['GET', 'POST'])
 def contact(recipient=None):
     info = None
-    saved_recipient_field = ContactForm.recipient
     recip_id = recipient or request.args.get('recipient')
+
+    # Copy our form class through inheritance
+    # since WTForms performs form changes through class variable
+    # modifications
+    class ModContactForm(ContactForm):
+        pass
 
     if recip_id in MAIL_RECIPIENT:
         recip_name = MAIL_RECIPIENT[recip_id][0]
-        ContactForm.recipient = TextField("Send To: ", default=recip_name,
-                                          id=recip_id)
+        ModContactForm.recipient = HiddenField(default=recip_id)
+        ModContactForm.recipientName = TextField("Send To: ", default=recip_name)
     else:
         recip_id = None
 
-    form = ContactForm(request.form)
-    ContactForm.recipient = saved_recipient_field
+    form = ModContactForm(request.form)
 
     if request.method == "POST":
         # There are three differente responses: thanks, invalid, and error
@@ -164,7 +169,7 @@ def contact(recipient=None):
 
         # If the response was thanks, clear the form.
         if response == 'thanks' :
-            form = ContactForm()
+            form = ModContactForm()
     return render_template("contact_t.html", form=form, info=info,
                            selected_recipient=recip_id,testing=testing,
                            page_title="Contact Us")

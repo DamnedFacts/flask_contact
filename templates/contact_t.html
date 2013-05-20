@@ -72,7 +72,7 @@
             {% if info %}
             {{info|safe}}
             {% else %}
-            <h2 class="intro">Contact Us</h2>
+            <!-- <h2 class="intro">Contact Us</h2>-->
             <p>This form will allow you to contact us by e-mail.</p>
             {% endif %}
         </div>
@@ -82,7 +82,8 @@
             <dl class=forms>
                 {% autoescape false %}
                 {% if selected_recipient is not none %}
-                    {{ render_field(form.recipient, labelclass="required", readonly=true) }}
+                    {{ render_field(form.recipientName, labelclass="required", readonly=true) }}
+                    {{ form.recipient }}
                 {% else %}
                     {{ render_field(form.recipient, labelclass="required") }}
                 {% endif %}
@@ -96,7 +97,9 @@
                 <!-- http://nesv.blogspot.com/2011/10/flask-gotcha-with-html-forms-checkboxes.html -->
                 {% endautoescape %}
             </dl>
-            <button type="submit" id="submit"> Submit </button> 
+            <div class="buttonHolder">
+                <button type="submit" id="submit"> Submit </button>
+            </div>
             <p class="form-meta" style="text-align: center;">I understand that without a valid E-mail address or phone number I cannot be contacted.</p>
         </form>
     </div>

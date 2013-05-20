@@ -1,4 +1,10 @@
-form {
+.container {
+    margin: 0;
+}
+
+.buttonHolder{ text-align: center; }
+
+form * {
     margin: 0;
     padding: 0;
 }
@@ -10,7 +16,7 @@ dl.forms {
 
 dl.forms dt {
     margin: 0;
-    padding: 10px 0 5px 0;
+    padding: 10px 0 10px 0;
     clear: left;
     float: left;
     width: 95px;
@@ -18,12 +24,15 @@ dl.forms dt {
 
 dl.forms label {
     font-weight: bold;
+    margin: 0;
+    padding: 0;
 }
 
 dl.forms dd {
     margin: 0;
-    padding: 10px 0 0 0;
+    padding: 10px 0 10px 0;
 }
+
 
 dl.forms dd.help {
     clear: left;
@@ -32,13 +41,14 @@ dl.forms dd.help {
     color: #999;
 }
 
+
 dl.forms input { width: 250px; }
 
 dl.forms textarea { width: 450px; }
 
 dl.forms dd.radio input { width: auto; }
 
-dl.forms textarea { height: 150px; }
+dl.forms textarea { height: 250px; }
 
 .required {
     color: #FF0000;
