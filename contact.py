@@ -34,18 +34,19 @@ from wtforms import Form, TextField, TextAreaField, BooleanField, \
     SelectField, HiddenField
 from formencode.variabledecode import variable_encode
 import smtplib
-from email.MIMEText import MIMEText
+from email.mime.text import MIMEText
 
 # Local Project
 import validation
 
 # import our configuration preferences for the contact form.
 try:
-    from config import MAIL_HOST, MAIL_PORT, MAIL_RECIPIENT, \
+    from .config import MAIL_HOST, MAIL_PORT, MAIL_RECIPIENT, \
         MAIL_SUBJECT_PREPEND
     testing = False
-except ImportError:
-    print "Warning: using sample config module (config_sample)!"
+except ImportError as e:
+    print(e)
+    print("Warning: using sample config module (config_sample)!")
     from config import MAIL_HOST, MAIL_PORT, MAIL_RECIPIENT, \
         MAIL_SUBJECT_PREPEND
     testing = True
