@@ -37,7 +37,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 # Local Project
-import validation
+from .validation import invalid_fields
 
 # import our configuration preferences for the contact form.
 try:
@@ -162,7 +162,7 @@ def contact(recipient=None):
         isAjax = "AJAX" in dataDict.keys()
 
         # Get all invalid field entries.
-        invalid = validation.invalid_fields(dataDict)
+        invalid = invalid_fields(dataDict)
 
         # If we have any invalid entries at on, we respond with an invalid
         # indicator. Otherwise, attempt to send the email.
