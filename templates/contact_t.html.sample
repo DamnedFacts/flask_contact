@@ -91,7 +91,7 @@
                 {{ render_field(form.email, labelclass="required") }}
                 {{ render_field(form.phone) }}
                 {{ render_field(form.subject, labelclass="required") }}
-                {{ render_field(form.message, labelclass="required") }}
+                {{ render_field(form.message, labelclass="required", rows='20',cols='100') }}
                 <dt>{{ form.antispam.label(class="antispam1") }}</dt>
                 <dd>{{ form.antispam(class="antispam1") }}</dd>
                 <!-- http://nesv.blogspot.com/2011/10/flask-gotcha-with-html-forms-checkboxes.html -->
