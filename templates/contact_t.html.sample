@@ -63,7 +63,7 @@
 {% endblock container %}
 
 {% block content %}
-<div class="twelve columns offset-by-three content">
+<div class="twelve columns content">
     {# Call content template super #}
     {# {{ super() }} #}
 
